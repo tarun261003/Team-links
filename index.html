@@ -1,31 +1,29 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Team Research Link Sharing</title>
+    <title>Team Research Sharing</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>🔗 Team Research Sharing</h1>
+<div class="container">
+    <h1>🔗 Team Research Links</h1>
 
-        <div class="form-section">
-            <input type="text" id="title" placeholder="Research Title">
-            <input type="url" id="url" placeholder="Research URL">
-            <input type="text" id="category" placeholder="Category (Jwt,cahe etc)">
-            <textarea id="description" placeholder="Short Description"></textarea>
-            <button id="addBtn">Add Link</button>
-        </div>
-
-        <hr>
-
-        <div id="linksContainer"></div>
+    <div class="form-section">
+        <input type="text" id="title" placeholder="Research Title">
+        <input type="url" id="url" placeholder="Research URL">
+        <input type="text" id="category" placeholder="Category">
+        <textarea id="description" placeholder="Short Description"></textarea>
+        <button id="addBtn">Add Link</button>
     </div>
 
-    <!-- IMPORTANT: type="module" -->
-    <script type="module" src="script.js"></script>
+    <hr>
+
+    <div id="linksContainer"></div>
+</div>
+
+<script type="module" src="script.js"></script>
 
 </body>
 </html>
