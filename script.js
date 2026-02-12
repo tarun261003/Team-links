@@ -12,7 +12,7 @@ import {
   orderBy
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// 🔥 Your Firebase Config
+
 const firebaseConfig = {
   apiKey: "AIzaSyCxn2fnSd9KSfE_cWv0xB6CXjU9Q15l78Y",
   authDomain: "team-link-sharing.firebaseapp.com",
@@ -65,7 +65,7 @@ addBtn.addEventListener("click", async () => {
   }
 });
 
-// 👀 Real-Time Fetch (Latest First)
+//  Real-Time Fetch (Latest First)
 const q = query(collection(db, "links"), orderBy("createdAt", "desc"));
 
 onSnapshot(q, (snapshot) => {
@@ -82,7 +82,7 @@ onSnapshot(q, (snapshot) => {
         <p>${link.description || ""}</p>
         <a href="${link.url}" target="_blank">${link.url}</a>
         <p><strong>Category:</strong> ${link.category || "N/A"}</p>
-        <button onclick="deleteLink('${docSnap.id}')">Delete</button>
+
       </div>
     `;
 
@@ -91,11 +91,5 @@ onSnapshot(q, (snapshot) => {
 
 });
 
-// ❌ Delete Link
-window.deleteLink = async function(id) {
-  try {
-    await deleteDoc(doc(db, "links", id));
-  } catch (error) {
-    console.error("Error deleting link: ", error);
-  }
+
 };
