@@ -27,7 +27,7 @@ jobs:
 
       - name: Generate config.js from secrets
         run: |
-          cat > config.js << 'SCRIPT'
+          cat > config.js << EOF
           export const firebaseConfig = {
             apiKey: "${{ secrets.FIREBASE_API_KEY }}",
             authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
@@ -36,7 +36,17 @@ jobs:
             messagingSenderId: "${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}",
             appId: "${{ secrets.FIREBASE_APP_ID }}"
           };
-          SCRIPT
+          EOF
+
+      - name: Remove config.js from .gitignore so it gets deployed
+        run: sed -i '/^config\.js$/d' .gitignore
+
+      - name: Verify config.js exists
+        run: |
+          echo "=== config.js contents (masked) ==="
+          cat config.js | sed 's/AIza[^"]*/***MASKED***/g'
+          echo "=== .gitignore contents ==="
+          cat .gitignore
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
