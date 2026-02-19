@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Team Research Links — A collaborative space to share, discover, and upvote research resources."
+    />
+    <title>Team Research Links</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Background Glow Effects -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-icon">🔗</div>
+        <h1>Team Research Links</h1>
+        <p class="header-subtitle">
+          Share, discover &amp; upvote the best research resources
+        </p>
+      </header>
+
+      <!-- Add Link Form -->
+      <section class="form-section" id="formSection">
+        <h2 class="form-title">
+          <span class="form-title-icon">✨</span>
+          Share a Resource
+        </h2>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="title">Title *</label>
+            <input
+              type="text"
+              id="title"
+              placeholder="e.g. Deep Learning Survey 2025"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="url">URL *</label>
+            <input type="url" id="url" placeholder="https://..." required />
+          </div>
+          <div class="input-group">
+            <label for="category">Category</label>
+            <input
+              type="text"
+              id="category"
+              placeholder="e.g. AI, Security, Web Dev"
+            />
+          </div>
+          <div class="input-group full-width">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              placeholder="A brief summary of what this resource covers..."
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <button id="addBtn" class="btn-primary">
+          <span class="btn-icon">🚀</span>
+          Add Link
+        </button>
+      </section>
+
+      <!-- Search & Filter -->
+      <section class="search-section">
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by title, category, or description..."
+          />
+          <button
+            id="clearSearch"
+            class="clear-search-btn"
+            title="Clear search"
+            style="display: none"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="results-count" id="resultsCount"></div>
+      </section>
+
+      <!-- Links Container -->
+      <main id="linksContainer" class="links-container">
+        <!-- Cards injected by JS -->
+      </main>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state" style="display: none">
+        <div class="empty-icon">📭</div>
+        <h3>No links yet</h3>
+        <p>Be the first to share a research resource!</p>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Loading links...</p>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
