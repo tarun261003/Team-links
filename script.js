@@ -12,7 +12,8 @@ import {
   orderBy,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// Import config from gitignored file
+// Import config — generated at deploy time by GitHub Actions from repository secrets.
+// For local dev, create config.js manually (see config.example.js).
 import { firebaseConfig } from "./config.js";
 
 // ─── Init Firebase ───────────────────────────────────

@@ -1,4 +1,4 @@
-# Firebase secrets
+# Firebase config (generated at deploy time from GitHub Secrets)
 config.js
 
 # OS files

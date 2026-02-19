@@ -11,99 +11,65 @@ A collaborative web app for sharing, discovering, and upvoting research resource
 - **XSS protection** — all user input is sanitized before rendering
 - **Responsive dark-mode UI** — glassmorphism design that looks great on any device
 
-## 🚀 Quick Start
+## 🚀 Quick Start (Local Development)
 
-### 1. Clone the repo
+1. **Clone the repo**
 
-```bash
-git clone https://github.com/<your-username>/Team-links.git
-cd Team-links
-```
+   ```bash
+   git clone https://github.com/<your-username>/Team-links.git
+   cd Team-links
+   ```
 
-### 2. Set up Firebase config
+2. **Create `config.js`** from the template:
 
-```bash
-cp config.example.js config.js
-```
+   ```bash
+   cp config.example.js config.js
+   ```
 
-Open `config.js` and replace the placeholder values with your [Firebase project credentials](https://console.firebase.google.com/).
+   Fill in your [Firebase credentials](https://console.firebase.google.com/). This file is gitignored.
 
-> **Note:** `config.js` is listed in `.gitignore` and will NOT be committed.
+3. **Open `index.html`** in your browser or run `npx serve .`
 
-### 3. Open in a browser
+## 🌐 Deploy to GitHub Pages
 
-Open `index.html` directly, or use a local server:
+Deployment is handled automatically via **GitHub Actions**. Your Firebase keys are injected at build time from encrypted **Repository Secrets** — they never appear in the source code.
 
-```bash
-npx serve .
-```
+### One-time setup:
+
+1. Go to your repo → **Settings → Secrets and variables → Actions**
+2. Add these **Repository Secrets**:
+
+   | Secret Name                    | Value                               |
+   | ------------------------------ | ----------------------------------- |
+   | `FIREBASE_API_KEY`             | Your Firebase API key               |
+   | `FIREBASE_AUTH_DOMAIN`         | e.g. `your-project.firebaseapp.com` |
+   | `FIREBASE_PROJECT_ID`          | e.g. `your-project`                 |
+   | `FIREBASE_STORAGE_BUCKET`      | e.g. `your-project.appspot.com`     |
+   | `FIREBASE_MESSAGING_SENDER_ID` | Your sender ID                      |
+   | `FIREBASE_APP_ID`              | Your app ID                         |
+
+3. Go to **Settings → Pages → Source** → select **GitHub Actions**
+4. Push to `main` — the workflow will auto-deploy!
 
 ## 🔒 Firestore Security Rules
 
-Since this is a client-side app, **Firestore Security Rules** are your real protection. In the [Firebase Console → Firestore → Rules](https://console.firebase.google.com/), set:
+Apply these rules in [Firebase Console → Firestore → Rules](https://console.firebase.google.com/):
 
 ```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /links/{linkId} {
-      // Anyone can read
       allow read: if true;
-
-      // Anyone can create, but must include required fields
       allow create: if request.resource.data.keys().hasAll(['title', 'url', 'votes'])
                     && request.resource.data.votes == 0;
-
-      // Only allow incrementing votes
       allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['votes'])
                     && request.resource.data.votes == resource.data.votes + 1;
-
-      // No deletes
       allow delete: if false;
     }
   }
 }
 ```
-
-## 🌐 Deploy to GitHub Pages
-
-1. Make sure `config.js` is **not** committed (check `.gitignore`).
-2. Since GitHub Pages serves static files, you need `config.js` present on the deployed site. Two options:
-
-   **Option A — Manual deploy:**
-   Add `config.js` to the deployment branch only (not `main`). Use a `gh-pages` branch and copy `config.js` into it.
-
-   **Option B — GitHub Actions (recommended):**
-   Store your Firebase config values as [GitHub Repository Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets), then generate `config.js` at build time:
-
-   ```yaml
-   # .github/workflows/deploy.yml
-   name: Deploy to GitHub Pages
-   on:
-     push:
-       branches: [main]
-   jobs:
-     deploy:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v4
-         - name: Generate config.js
-           run: |
-             cat > config.js << EOF
-             export const firebaseConfig = {
-               apiKey: "${{ secrets.FIREBASE_API_KEY }}",
-               authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
-               projectId: "${{ secrets.FIREBASE_PROJECT_ID }}",
-               storageBucket: "${{ secrets.FIREBASE_STORAGE_BUCKET }}",
-               messagingSenderId: "${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}",
-               appId: "${{ secrets.FIREBASE_APP_ID }}"
-             };
-             EOF
-         - uses: peaceiris/actions-gh-pages@v3
-           with:
-             github_token: ${{ secrets.GITHUB_TOKEN }}
-             publish_dir: ./
-   ```
 
 ## 📄 License
 
