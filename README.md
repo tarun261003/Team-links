@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🔗 Team Research Links
 
 A collaborative web app for sharing, discovering, and upvoting research resources within your team. Built with vanilla HTML/CSS/JS and Firebase Firestore for real-time data sync.
@@ -109,6 +108,3 @@ service cloud.firestore {
 ## 📄 License
 
 MIT
-=======
-# Team-links
->>>>>>> cd177a6b69d61566fde00768fa2357fe66474987
